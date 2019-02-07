@@ -68,8 +68,11 @@ app.post("/login", async (req,res) => {
             expiresIn: "1d"
         });
 
+        const expiresIn = Number(Date.now()) + 86400;
+
         res.json({
-            token
+            token,
+            expiresIn
         }).sendStatus(200);
     }
     catch(err)
