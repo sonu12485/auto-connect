@@ -68,9 +68,9 @@ app.post("/login", async (req,res) => {
             expiresIn: "1d"
         });
 
-        res.sendStatus(200).json({
+        res.json({
             token
-        });
+        }).sendStatus(200);
     }
     catch(err)
     {
