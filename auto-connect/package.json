@@ -18,6 +18,7 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "babel-plugin-inline-dotenv": "^1.2.1",
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^32.0.0"
   },
