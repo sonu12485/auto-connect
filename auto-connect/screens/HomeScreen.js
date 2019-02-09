@@ -4,25 +4,24 @@ import { View, Text, StyleSheet } from "react-native";
 import { fetchUserDetails } from "../actions/userDetails";
 
 import { connect } from "react-redux";
+import Map from "../components/Map";
 
 class HomeScreen extends Component {
-  componentDidMount()
-  {
+  componentDidMount() {
     this.props.fetchUserDetails();
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>HomeScreen</Text>
-      </View>
-    );
+    return <Map />;
   }
 }
 
-export default connect(null, {
-  fetchUserDetails
-})(HomeScreen);
+export default connect(
+  null,
+  {
+    fetchUserDetails
+  }
+)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {
