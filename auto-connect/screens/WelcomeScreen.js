@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 
 import { login } from "../actions/auth";
 
+import Toast from 'react-native-simple-toast';
+
 class WelcomeScreen extends Component {
 
   constructor(props)
@@ -37,11 +39,21 @@ class WelcomeScreen extends Component {
         this.props.login(result.user.name, result.user.email, result.user.photoUrl);
 
       } else {
-        console.log("cancelled")
+
+        Toast.show("Google login interrupted");
+        
+        this.setState({
+          loading: false
+        });
       }
 
     } catch (e) {
-      console.log("error", e)
+
+      Toast.show("Google login interrupted");
+
+      this.setState({
+        loading: false
+      });
     }
 
   }
