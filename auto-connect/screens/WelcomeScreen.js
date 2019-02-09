@@ -18,11 +18,11 @@ class WelcomeScreen extends Component {
 
   signIn = async () => {
 
-    console.log(process.env["GOOGLE_OAUTH_CLIENT_ID"]);
+    // console.log(process.env["GOOGLE_OAUTH_CLIENT_ID"]);
 
     try {
       const result = await Google.logInAsync({
-        androidClientId: process.env['GOOGLE_OAUTH_CLIENT_ID'],
+        androidClientId: process.env["GOOGLE_OAUTH_CLIENT_ID"],
         scopes: ["profile", "email"]
       });
 
