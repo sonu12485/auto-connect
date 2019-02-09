@@ -40,12 +40,11 @@ app.get("/", (req, res) => {
     res.send("Backend for Autoconnect");
 });
 
-app.post("/login", async (req,res) => {
+app.post("/login/user", async (req,res) => {
     const {
         email,
         profilePic,
-        firstName,
-        lastName
+        name
     } = req.body;
 
     try
@@ -57,8 +56,7 @@ app.post("/login", async (req,res) => {
             const newUser = new User({
                 email,
                 profilePic,
-                firstName,
-                lastName
+                name
             });
 
             const result = await newUser.save();

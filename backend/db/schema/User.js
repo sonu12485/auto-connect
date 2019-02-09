@@ -12,11 +12,7 @@ const UserSchema = new Schema({
         required: true,
         default: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
     },
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
+    name: {
         type: String,
         required: true
     }
