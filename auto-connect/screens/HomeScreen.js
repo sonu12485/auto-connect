@@ -10,6 +10,7 @@ class HomeScreen extends Component {
     );
   }
 }
+
 export default HomeScreen;
 
 const styles = StyleSheet.create({

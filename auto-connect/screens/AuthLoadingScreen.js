@@ -15,8 +15,17 @@ class AuthLoadingScreen extends Component {
 
   loadApp = async () => {
     const token = await AsyncStorage.getItem("token");
-    // this.props.navigation.navigate(token ? "Main" : "Welcome");
-    this.props.navigation.navigate("Welcome");
+    const expiresIn = await AsyncStorage.getItem("expiresIn");
+
+    if(Date.now() < Number(expiresIn) && token)
+    {
+      this.props.navigation.navigate("Main");
+    }
+    else
+    {
+      this.props.navigation.navigate("Welcome");
+    }
+
   };
 
   render() {

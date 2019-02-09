@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+
+import { Button } from "react-native-elements";
 
 import { Google } from 'expo';
+
+import { connect } from "react-redux";
+
+import { login } from "../actions/auth";
 
 class WelcomeScreen extends Component {
 
@@ -9,16 +15,16 @@ class WelcomeScreen extends Component {
   {
     super(props);
 
-    this.state={
-      signedIn: false, 
-      name: "", 
-      photoUrl: ""
+    this.state = {
+      loading: false
     }
   }
 
   signIn = async () => {
 
-    // console.log(process.env["GOOGLE_OAUTH_CLIENT_ID"]);
+    this.setState({
+      loading: true
+    });
 
     try {
       const result = await Google.logInAsync({
@@ -27,11 +33,9 @@ class WelcomeScreen extends Component {
       });
 
       if (result.type === "success") {
-        this.setState({
-          signedIn: true,
-          name: result.user.name,
-          photoUrl: result.user.photoUrl
-        })
+
+        this.props.login(result.user.name, result.user.email, result.user.photoUrl);
+
       } else {
         console.log("cancelled")
       }
@@ -42,21 +46,35 @@ class WelcomeScreen extends Component {
 
   }
 
+  componentDidUpdate()
+  {
+    if(this.props.user.loggedIn)
+    {
+      this.setState({
+        loading: false
+      });
+
+      this.props.navigation.navigate("Main");
+    }
+  }
+
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <Text>WelcomeScreen</Text>
         <View>
           <View style={{ padding: 10 }} >
           <Button
-            onPress={this.signIn}
             title="SignIn as User"
+            onPress={this.signIn}
+            loading={this.state.loading}
           />
           </View>
           <View style={{ padding: 10 }} >
           <Button
-            onPress={this.signIn}
+            onPress={_ => {
+              console.log("Driver SignIn");
+            }}
             title="SignIn as Auto Driver"
           />
           </View>
@@ -65,7 +83,16 @@ class WelcomeScreen extends Component {
     );
   }
 }
-export default WelcomeScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, {
+  login
+})(WelcomeScreen);
 
 const styles = StyleSheet.create({
   container: {
