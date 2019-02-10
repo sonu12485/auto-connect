@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Picker } from "react-native";
 
 import { fetchUserDetails } from "../actions/userDetails";
 
@@ -8,6 +8,16 @@ import { connect } from "react-redux";
 import Map from "../components/Map";
 
 class HomeScreen extends Component {
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      start: "java",
+      end: "js"
+    }
+  }
+
   componentDidMount() {
     this.props.fetchUserDetails();
   }
@@ -15,8 +25,45 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.inputContainer} >
+
         <View>
-          <Text>HomeScreen</Text>
+          <View>
+            <Text>Enter start Location</Text>
+          </View>
+          <View>
+            <Picker
+              mode="dropdown"
+              selectedValue={this.state.start}
+              style={{height: 60, width: 300}}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({start: itemValue})
+              }>
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </View>
+        </View>
+
+        <View>
+          <View>
+            <Text>Enter end Location</Text>
+          </View>
+          <View>
+            <Picker
+              mode="dropdown"
+              selectedValue={this.state.end}
+              style={{height: 60, width: 300}}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({end: itemValue})
+              }>
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </View>
+        </View>
+        
+
         </View>
         <View style={styles.mapContainer} >
           <Map />
@@ -42,5 +89,8 @@ const styles = StyleSheet.create({
   mapContainer: {
     height: 500,
     width: "100%"
+  },
+  inputContainer: {
+    marginTop: 10
   }
 });
