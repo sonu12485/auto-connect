@@ -42,6 +42,12 @@ app.use(authRoutes);
 const userRoutes = require("./routes/user");
 app.use(userRoutes);
 
+const locationRoutes = require("./routes/locations");
+app.use(locationRoutes);
+
+const routeRoutes = require("./routes/route");
+app.use(routeRoutes);
+
 app.listen(PORT, () => {
     console.log(`App listening at port ${PORT}`);
 });
