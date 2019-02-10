@@ -3,7 +3,6 @@ const morgan = require("morgan");
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(morgan('combined'));
@@ -13,7 +12,6 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-const SECRET = process.env.JWT_SECRET;
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -34,51 +32,15 @@ mongoose
 
 app.use(bodyParser.json());
 
-const User = require("./db/schema/User");
-
 app.get("/", (req, res) => {
     res.send("Backend for Autoconnect");
 });
 
-app.post("/login/user", async (req,res) => {
-    const {
-        email,
-        profilePic,
-        name
-    } = req.body;
+const authRoutes = require('./routes/auth');
+app.use(authRoutes);
 
-    try
-    {
-        const user = await User.findOne({ email });
-
-        if(!user)
-        {
-            const newUser = new User({
-                email,
-                profilePic,
-                name
-            });
-
-            const result = await newUser.save();
-        }
-
-        const token = jwt.sign({ email }, SECRET, {
-            expiresIn: "1d"
-        });
-
-        const expiresIn = Number(Date.now()) + 86400;
-
-        res.json({
-            token,
-            expiresIn
-        }).sendStatus(200);
-    }
-    catch(err)
-    {
-        res.sendStatus(500).send("Server Error");
-    }
-
-});
+const userRoutes = require("./routes/user");
+app.use(userRoutes);
 
 app.listen(PORT, () => {
     console.log(`App listening at port ${PORT}`);
