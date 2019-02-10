@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Platform, View, Text, StyleSheet, Picker } from "react-native";
 import { Constants, Location, Permissions } from "expo";
+import Icon from "@expo/vector-icons/Ionicons";
 import { fetchUserDetails } from "../actions/userDetails";
 import { fetchPlaces } from "../actions/places";
 
@@ -50,20 +51,14 @@ class HomeScreen extends Component {
   };
 
   renderPlaces = () => {
-
-    if(this.props.places !== null)
-    {
-      return this.props.places.map( place => {
-        return (
-          <Picker.Item label={place.name} value={place.id} />
-        );
+    if (this.props.places !== null) {
+      return this.props.places.map(place => {
+        return <Picker.Item label={place.name} value={place.id} />;
       });
-    }
-    else
-    {
+    } else {
       return null;
     }
-  }
+  };
 
   render() {
     return (
@@ -86,7 +81,11 @@ class HomeScreen extends Component {
               </Picker>
             </View>
           </View>
-
+          <Icon
+            onPress={() => console.log("Search clicked")}
+            name="md-search"
+            size={30}
+          />
           <View>
             <View>
               <Text>Enter end Location</Text>
@@ -121,11 +120,11 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     places: state.places
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
