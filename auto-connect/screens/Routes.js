@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Platform, View, Text, StyleSheet, Picker } from "react-native";
 import { Constants, Location, Permissions } from "expo";
 import { fetchUserDetails } from "../actions/userDetails";
+import { fetchPlaces } from "../actions/places";
 
 import { connect } from "react-redux";
 
@@ -14,13 +15,14 @@ class HomeScreen extends Component {
     this.state = {
       location: null,
       locationErrorMessage: null,
-      start: "java",
-      end: "js"
+      start: 11,
+      end: null
     };
   }
 
   componentDidMount() {
     this.props.fetchUserDetails();
+    this.props.fetchPlaces();
 
     if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
@@ -46,6 +48,23 @@ class HomeScreen extends Component {
       console.log(e);
     }
   };
+
+  renderPlaces = () => {
+
+    if(this.props.places !== null)
+    {
+      return this.props.places.map( place => {
+        return (
+          <Picker.Item label={place.name} value={place.id} />
+        );
+      });
+    }
+    else
+    {
+      return null;
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -63,8 +82,7 @@ class HomeScreen extends Component {
                   this.setState({ start: itemValue })
                 }
               >
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
+                {this.renderPlaces()}
               </Picker>
             </View>
           </View>
@@ -82,8 +100,7 @@ class HomeScreen extends Component {
                   this.setState({ end: itemValue })
                 }
               >
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
+                {this.renderPlaces()}
               </Picker>
             </View>
           </View>
@@ -104,10 +121,17 @@ class HomeScreen extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    places: state.places
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   {
-    fetchUserDetails
+    fetchUserDetails,
+    fetchPlaces
   }
 )(HomeScreen);
 
@@ -118,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   mapContainer: {
-    height: 500,
+    height: 450,
     width: "100%"
   },
   inputContainer: {
