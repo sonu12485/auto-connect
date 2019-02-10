@@ -10,10 +10,12 @@ import reducers from './reducers';
 
 import thunk from 'redux-thunk';
 
+import logger from 'redux-logger';
+
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
-export default class App extends React.Component {
+export default class App extends React.Component { 
   state = {
     isLoadingComplete: false
   };
