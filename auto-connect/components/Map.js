@@ -14,7 +14,15 @@ class Map extends React.Component {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
-      />
+      >
+        <MapView.Marker
+          coordinate={{
+            latitude: this.props.lat ? this.props.lat : 0,
+            longitude: this.props.long ? this.props.long : 0
+          }}
+          title="Your Location"
+        />
+      </MapView>
     );
   }
 }

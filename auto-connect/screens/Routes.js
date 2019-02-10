@@ -47,12 +47,6 @@ class HomeScreen extends Component {
     }
   };
   render() {
-    let locationText = "Waiting..";
-    if (this.state.locationErrorMessage) {
-      locationText = this.state.locationErrorMessage;
-    } else if (this.state.location) {
-      locationText = JSON.stringify(this.state.location);
-    }
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -93,9 +87,6 @@ class HomeScreen extends Component {
               </Picker>
             </View>
           </View>
-        </View>
-        <View>
-          <Text>{locationText}</Text>
         </View>
         <View style={styles.mapContainer}>
           <Map
