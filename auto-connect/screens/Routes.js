@@ -65,6 +65,7 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <View>
+          <View>
             <View>
               <Text>Enter start Location</Text>
             </View>
@@ -81,11 +82,7 @@ class HomeScreen extends Component {
               </Picker>
             </View>
           </View>
-          <Icon
-            onPress={() => console.log("Search clicked")}
-            name="md-search"
-            size={30}
-          />
+          
           <View>
             <View>
               <Text>Enter end Location</Text>
@@ -102,6 +99,14 @@ class HomeScreen extends Component {
                 {this.renderPlaces()}
               </Picker>
             </View>
+          </View>
+          </View>
+          <View style={{ paddingLeft: 10 }} >
+            <Icon
+              onPress={() => console.log("Search clicked")}
+              name="md-search"
+              size={30}
+            />
           </View>
         </View>
         <View style={styles.mapContainer}>
@@ -145,6 +150,9 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   inputContainer: {
-    marginTop: 20
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
   }
 });
