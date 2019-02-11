@@ -13,7 +13,7 @@ const router = express.Router();
 const locations = require("../db/data/locations");
 const route = require("../db/data/routeMap");
 
-router.post("/route", async (req,res) => {
+router.post("/route", getAuthToken, async (req,res) => {
 
     jwt.verify(req.token, SECRET, async (err, authData) => {
         if (err) {

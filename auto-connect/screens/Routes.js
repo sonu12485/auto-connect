@@ -4,6 +4,7 @@ import { Constants, Location, Permissions } from "expo";
 import Icon from "@expo/vector-icons/Ionicons";
 import { fetchUserDetails } from "../actions/userDetails";
 import { fetchPlaces } from "../actions/places";
+import { fetchRoute } from "../actions/route";
 
 import { connect } from "react-redux";
 
@@ -17,7 +18,7 @@ class HomeScreen extends Component {
       location: null,
       locationErrorMessage: null,
       start: 11,
-      end: null
+      end: 1
     };
   }
 
@@ -103,7 +104,15 @@ class HomeScreen extends Component {
           </View>
           <View style={{ paddingLeft: 10 }} >
             <Icon
-              onPress={() => console.log("Search clicked")}
+              onPress={() => {
+                console.log("Search clicked")
+              
+                this.props.fetchRoute(
+                  this.state.start.toString(), 
+                  this.state.end.toString()
+                );
+
+              }}
               name="md-search"
               size={30}
             />
@@ -127,7 +136,8 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    places: state.places
+    places: state.places,
+    route: state.route
   };
 };
 
@@ -135,7 +145,8 @@ export default connect(
   mapStateToProps,
   {
     fetchUserDetails,
-    fetchPlaces
+    fetchPlaces,
+    fetchRoute
   }
 )(HomeScreen);
 
