@@ -3,6 +3,8 @@ import { MapView } from "expo";
 
 import { connect } from "react-redux";
 
+import colors from "../constants/routeColors";
+
 // PROPS: lat,long
 
 class Map extends React.Component {
@@ -11,13 +13,16 @@ class Map extends React.Component {
 
     if(this.props.route.polyline !== null)
     {
-      return (
-        <MapView.Polyline
-          coordinates={this.props.route.polyline}
-          strokeWidth={4}
-          strokeColor="rgba(255,140,0,0.8)"
-        />
-      );
+
+      return this.props.route.polyline.map( (a, index) => {
+        return (
+          <MapView.Polyline
+            coordinates={a}
+            strokeWidth={4}
+            strokeColor={colors[index]}
+          />
+        );
+      });
     }
     else
     {

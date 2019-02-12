@@ -11,7 +11,7 @@ const API_KEY = "AIzaSyCvEFK1EMeKuwvshOn8NAS214I2WzrEPgc";
 
 export const fetchRoute = (from, to) => {
 
-    return dispatch => {
+    return async dispatch => {
 
         AsyncStorage.getItem("token")
             .then( token => {
@@ -27,34 +27,45 @@ export const fetchRoute = (from, to) => {
                         to
                     }
                 })
-                .then( res => {
+                .then( async res => {
 
                     const route = res.data;
+                    const polylines = [];
 
-                    axios.get(
-                    `https://maps.googleapis.com/maps/api/directions/json?origin=${route[0].lat},${route[0].long}&destination=${route[1].lat},${route[1].long}&mode=walking&key=${API_KEY}`
-                    )
-                    .then(result => result.data)
-                    .then(result => {
-                        let array = Polyline.decode(result.routes[0].overview_polyline.points);
-                        let coordinates = array.map((point) => {
-                                return  {
-                                    latitude :point[0],
-                                    longitude :point[1]
-                                }
-                            })
+                    try
+                    {
+                        for(i=0;i<(route.length - 1);i++)
+                        {
+                            const responce = await axios.get(
+                                `https://maps.googleapis.com/maps/api/directions/json?origin=${route[i].lat},${route[i].long}&destination=${route[i+1].lat},${route[i+1].long}&mode=driving&key=${API_KEY}`
+                                );
+                            
+                            const result = responce.data;
+
+                            let array = Polyline.decode(result.routes[0].overview_polyline.points);
+                            let coordinates = array.map((point) => {
+                                    return  {
+                                        latitude :point[0],
+                                        longitude :point[1]
+                                    }
+                                });
+
+                            polylines.push(coordinates);
+                        }
 
                         dispatch({
                             type: "FETCH_ROUTE",
                             payload: {
                                 route,
-                                polyline: coordinates
+                                polyline: polylines
                             }
                         });
-
-                    }).catch(er => {
-                        console.log(er.message);
-                    });
+                    }
+                    catch(err)
+                    {
+                        console.log("error", err);
+                    }
+                    
                 })
                 .catch( err => {
                     console.log("error", err);
