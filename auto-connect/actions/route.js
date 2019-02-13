@@ -4,8 +4,12 @@ const URL = process.env["BACKEND_URI"];
 
 import { AsyncStorage } from "react-native";
 
+import Polyline from "@mapbox/polyline";
+
+const API_KEY = "AIzaSyCvEFK1EMeKuwvshOn8NAS214I2WzrEPgc";
+
 export const fetchRoute = (from, to) => {
-  return dispatch => {
+  return async dispatch => {
     AsyncStorage.getItem("token").then(token => {
       axios({
         url: `${URL}route`,
@@ -19,13 +23,45 @@ export const fetchRoute = (from, to) => {
           to
         }
       })
-        .then(res => {
-          console.log(res.data);
+        .then(async res => {
+          const route = res.data;
+          const polylines = [];
 
-          dispatch({
-            type: "FETCH_ROUTE",
-            payload: res.data
-          });
+          try {
+            for (i = 0; i < route.length - 1; i++) {
+              const response = await axios.get(
+                `https://maps.googleapis.com/maps/api/directions/json?origin=${
+                  route[i].lat
+                },${route[i].long}&destination=${route[i + 1].lat},${
+                  route[i + 1].long
+                }&mode=driving&key=${API_KEY}`
+              );
+
+              const result = response.data;
+
+              let array = Polyline.decode(
+                result.routes[0].overview_polyline.points
+              );
+              let coordinates = array.map(point => {
+                return {
+                  latitude: point[0],
+                  longitude: point[1]
+                };
+              });
+
+              polylines.push(coordinates);
+            }
+
+            dispatch({
+              type: "FETCH_ROUTE",
+              payload: {
+                route,
+                polyline: polylines
+              }
+            });
+          } catch (err) {
+            console.log("error", err);
+          }
         })
         .catch(err => {
           console.log("error", err);

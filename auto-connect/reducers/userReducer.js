@@ -17,7 +17,6 @@ export default function(state = initialState, action)
                 email: action.payload.email,
                 profilePic: action.payload.profilePic
             }
-            break;
 
         case "FETCH_USER_DETAILS":
             return {
@@ -30,6 +29,5 @@ export default function(state = initialState, action)
 
         default:
             return state;
-            break;
     }
 }
