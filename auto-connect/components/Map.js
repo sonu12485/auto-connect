@@ -9,7 +9,7 @@ import colors from "../constants/routeColors";
 
 class Map extends React.Component {
 
-  renderPolyline = () => {
+  renderRoutePolyline = () => {
 
     if(this.props.route.polyline !== null)
     {
@@ -27,6 +27,28 @@ class Map extends React.Component {
     else
     {
       return null;  
+    }
+  }
+
+  renderRouteMarkers = () => {
+
+    if(this.props.route.route !== null)
+    {
+      return this.props.route.route.map( a => {
+        return (
+          <MapView.Marker
+            coordinate={{
+              latitude: a.lat,
+              longitude: a.long
+            }}
+            title={a.name}
+          />
+        );
+      });
+    }
+    else
+    {
+      return null;
     }
   }
 
@@ -50,7 +72,8 @@ class Map extends React.Component {
           }}
           title="Your Location"
         />
-        {this.renderPolyline()}
+        {this.renderRoutePolyline()}
+        {this.renderRouteMarkers()}
       </MapView>
     );
   }
