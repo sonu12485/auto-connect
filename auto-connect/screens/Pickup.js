@@ -1,21 +1,175 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  Platform,
+  View,
+  Text,
+  StyleSheet,
+  Picker,
+  Linking
+} from "react-native";
+import { Constants, Location, Permissions } from "expo";
+import Icon from "@expo/vector-icons/Ionicons";
+import { Button } from "react-native-elements";
+import { fetchUserDetails } from "../actions/userDetails";
+import { fetchPlaces } from "../actions/places";
+import { fetchRoute } from "../actions/route";
+
+import { connect } from "react-redux";
+
+import Map from "../components/Map";
 
 class Pickup extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      location: null,
+      locationErrorMessage: null,
+      start: 11,
+      end: 1
+    };
+  }
+
+  componentDidMount() {
+    this.props.fetchUserDetails();
+    this.props.fetchPlaces();
+
+    if (Platform.OS === "android" && !Constants.isDevice) {
+      this.setState({
+        locationErrorMessage:
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
+
+  _getLocationAsync = async () => {
+    try {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== "granted") {
+        this.setState({
+          locationErrorMessage: "Location access denied"
+        });
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ location });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  renderPlaces = () => {
+    if (this.props.places !== null) {
+      return this.props.places.map(place => {
+        return <Picker.Item label={place.name} value={place.id} />;
+      });
+    } else {
+      return null;
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Pickup</Text>
+        <View style={styles.inputContainer}>
+          <View>
+            <View>
+              <View>
+                <Text>Enter your current location</Text>
+              </View>
+              <View>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={this.state.start}
+                  style={{ height: 60, width: 300 }}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ start: itemValue })
+                  }
+                >
+                  {this.renderPlaces()}
+                </Picker>
+              </View>
+            </View>
+          </View>
+          <View style={{ paddingLeft: 10 }}>
+            <Icon
+              onPress={() => {
+                console.log("Search clicked");
+
+                this.props.fetchRoute(
+                  this.state.start.toString(),
+                  this.state.end.toString()
+                );
+              }}
+              name="md-compass"
+              size={30}
+            />
+          </View>
+        </View>
+        <View style={styles.mapContainer}>
+          <Map
+            lat={
+              this.state.location && Number(this.state.location.coords.latitude)
+            }
+            long={
+              this.state.location &&
+              Number(this.state.location.coords.longitude)
+            }
+          />
+        </View>
+        <View style={styles.navigateButtonContainer}>
+          <Button
+            icon={<Icon name="md-navigate" color="white" size={30} />}
+            iconRight
+            title="Navigate to nearest auto stand"
+            onPress={() => {
+              console.log("Navigation button clicked");
+              Linking.openURL("google.navigation:q=100+101");
+            }}
+          />
+        </View>
       </View>
     );
   }
 }
-export default Pickup;
+
+const mapStateToProps = state => {
+  return {
+    places: state.places,
+    route: state.route
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchUserDetails,
+    fetchPlaces,
+    fetchRoute
+  }
+)(Pickup);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "flex-start"
+  },
+  mapContainer: {
+    height: 450,
+    width: "100%"
+  },
+  inputContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  navigateButtonContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
   }
 });
