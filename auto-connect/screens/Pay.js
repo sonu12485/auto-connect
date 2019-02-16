@@ -1,32 +1,30 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { BarCodeScanner, Permissions } from 'expo';
+import { BarCodeScanner, Permissions } from "expo";
 
 import { storeQRCodeData } from "../actions/qrCode";
 
 import { connect } from "react-redux";
 
 class Pay extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
 
     this.state = {
       hasCameraPermission: null
-    }
+    };
   }
 
-  async componentDidMount() 
-  {
+  async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
+    this.setState({ hasCameraPermission: status === "granted" });
   }
 
   handleBarCodeScanned = ({ type, data }) => {
     console.log(data);
     this.props.storeQRCodeData(data);
     this.props.navigation.navigate("FinalPay");
-  }
+  };
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -39,11 +37,23 @@ class Pay extends Component {
     }
     return (
       <View style={styles.container}>
+        <View style={{ display: "flex", marginBottom: 35 }}>
+          <Text
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              fontWeight: "bold",
+              fontSize: 30
+            }}
+          >
+            Scan the QR Code of the driver
+          </Text>
+        </View>
         <BarCodeScanner
           onBarCodeScanned={this.handleBarCodeScanned}
           style={{
-            height: Dimensions.get('window').height/2,
-            width: Dimensions.get('window').width/2,
+            height: 200,
+            width: 200
           }}
         />
       </View>
@@ -51,9 +61,12 @@ class Pay extends Component {
   }
 }
 
-export default connect(null, {
-  storeQRCodeData
-})(Pay);
+export default connect(
+  null,
+  {
+    storeQRCodeData
+  }
+)(Pay);
 
 const styles = StyleSheet.create({
   container: {
