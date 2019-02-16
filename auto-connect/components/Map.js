@@ -54,6 +54,14 @@ class Map extends React.Component {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
+        region={{
+          latitude: this.props.lat,
+          longitude: this.props.long,
+          // latitude: 12.973739,
+          // longitude: 77.641445,
+          latitudeDelta: this.props.route.polyline !== null ? 0.1 : 0.01,
+          longitudeDelta: this.props.route.polyline !== null ? 0.1 : 0.01
+        }}
       >
         <MapView.Marker
           coordinate={{
