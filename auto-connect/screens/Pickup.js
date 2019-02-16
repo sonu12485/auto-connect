@@ -151,9 +151,9 @@ class Pickup extends Component {
         <View style={styles.navigateButtonContainer}>
           <Button
             buttonStyle={{ width: 600, height: 55 }}
-            icon={<Icon name="md-navigate" color="white" size={30} />}
+            icon={<Icon name="md-navigate" color="white" size={23} />}
             iconRight
-            title="Navigate to auto stand"
+            title="Navigate to auto stand     "
             onPress={() => {
               console.log("Navigation button clicked");
               Linking.openURL(
