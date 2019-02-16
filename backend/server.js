@@ -51,6 +51,9 @@ app.use(routeRoutes);
 const moneyRoute = require("./routes/money");
 app.use(moneyRoute);
 
+const autoNumberRoutes = require("./routes/autoNumber");
+app.use(autoNumberRoutes);
+
 app.listen(PORT, () => {
     console.log(`App listening at port ${PORT}`);
 });

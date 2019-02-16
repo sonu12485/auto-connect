@@ -71,7 +71,7 @@ router.post("/login/driver", async (req,res) => {
                 email,
                 profilePic,
                 name,
-                autoNumber: "OD 02AL 5656"
+                autoNumber: "None"
             });
 
             const result = await newDriver.save();
