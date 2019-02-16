@@ -3,7 +3,8 @@ const initialState = {
   type: null,
   name: null,
   email: null,
-  profilePic: null
+  profilePic: null,
+  transactions: null
 };
 
 export default function(state = initialState, action) {
@@ -37,7 +38,8 @@ export default function(state = initialState, action) {
         email: action.payload.email,
         profilePic: action.payload.profilePic,
         balance: action.payload.money,
-        autoNumber: action.payload.autoNumber
+        autoNumber: action.payload.autoNumber,
+        transactions: action.payload.transactions
       };
 
     default:

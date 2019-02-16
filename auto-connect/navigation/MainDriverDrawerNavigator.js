@@ -14,6 +14,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 
 import DriverDashboardStackNavigator from "./DriverDashboardStackNavigator";
 import QRCodeDisplayScreen from "../screens/QRCodeDisplay";
+import DriverTransactionsScreen from "../screens/DriverTransactionsScreen";
 import { connect } from "react-redux";
 
 class customDrawerComponent extends Component {
@@ -117,6 +118,13 @@ const AppDrawerNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: "Display QR Code",
         drawerIcon: () => <Icon name="md-qr-scanner" size={30} />
+      }
+    },
+    Transactions: {
+      screen: DriverTransactionsScreen,
+      navigationOptions: {
+        drawerLabel: "Transaction History",
+        drawerIcon: () => <Icon name="md-sync" size={30} />
       }
     }
   },

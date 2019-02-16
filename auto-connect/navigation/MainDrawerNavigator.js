@@ -15,6 +15,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 import DashboardStackNavigator from "./DashboardStackNavigator";
 import PayStackNavigator from "./PayStackNavigator";
 import AddMoneyScreen from "../screens/AddMoney";
+import TransactionsScreen from "../screens/TransactionsScreen";
 import { connect } from "react-redux";
 
 class customDrawerComponent extends Component {
@@ -113,6 +114,13 @@ const AppDrawerNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: "Add Money to Wallet",
         drawerIcon: () => <Icon name="md-wallet" size={30} />
+      }
+    },
+    Transactions: {
+      screen: TransactionsScreen,
+      navigationOptions: {
+        drawerLabel: "Transaction History",
+        drawerIcon: () => <Icon name="md-sync" size={30} />
       }
     }
   },
