@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 
 import { Input, Button } from 'react-native-elements';
 
+import { fetchUserDetails } from "../actions/userDetails";
+
+import { connect } from "react-redux";
+
 import axios from "axios";
 const URL = process.env["BACKEND_URI"];
 
@@ -43,9 +47,9 @@ class FinalPay extends Component {
             loading: false
         });
 
-        alert("Money transfer done!");
+        this.props.fetchUserDetails();
 
-        this.props.navigation.navigate("Main");
+        alert("Money transfer done!");
       }
       catch(err)
       {
@@ -79,7 +83,9 @@ class FinalPay extends Component {
   }
 }
 
-export default FinalPay;
+export default connect(null, {
+    fetchUserDetails
+})(FinalPay);
 
 const styles = StyleSheet.create({
   container: {
