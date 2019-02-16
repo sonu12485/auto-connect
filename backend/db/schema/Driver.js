@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const DriverSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -16,6 +16,9 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    autoNumber: {
+        type: String
+    },
     money: {
         type: Number,
         required: true,
@@ -23,6 +26,6 @@ const UserSchema = new Schema({
     }
 });
 
-const User = mongoose.model("User", UserSchema);
+const Driver = mongoose.model("Driver", DriverSchema);
 
-module.exports = User;
+module.exports = Driver;
