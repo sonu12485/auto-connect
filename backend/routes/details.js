@@ -58,6 +58,8 @@ router.get("/details", getAuthToken, async (req,res) => {
 
                     if(driver)
                     {
+                        console.log(driver);
+
                         res.json({
                             email: driver.email,
                             name: driver.name,

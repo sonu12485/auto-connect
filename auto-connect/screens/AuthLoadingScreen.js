@@ -22,8 +22,10 @@ class AuthLoadingScreen extends Component {
     const expiresIn = await AsyncStorage.getItem("expiresIn");
 
     if (Date.now() < Number(expiresIn) && token) {
-      if (user.type === "user") this.props.navigation.navigate("Main");
-      else this.props.navigation.navigate("MainDriver");
+
+      // if (user.type === "user") this.props.navigation.navigate("Main");
+      // else this.props.navigation.navigate("MainDriver");
+      
     } else {
       this.props.navigation.navigate("Welcome");
     }
