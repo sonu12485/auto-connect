@@ -7,7 +7,7 @@ import { Google } from "expo";
 
 import { connect } from "react-redux";
 
-import { login } from "../actions/auth";
+import { loginUser, loginDriver } from "../actions/auth";
 
 import Toast from "react-native-simple-toast";
 
@@ -16,13 +16,14 @@ class WelcomeScreen extends Component {
     super(props);
 
     this.state = {
-      loading: false
+      loadingUser: false,
+      loadingDriver: false
     };
   }
 
-  signIn = async () => {
+  signInUser = async () => {
     this.setState({
-      loading: true
+      loadingUser: true
     });
 
     try {
@@ -32,23 +33,58 @@ class WelcomeScreen extends Component {
       });
 
       if (result.type === "success") {
-        this.props.login(
+        this.props.loginUser(
           result.user.name,
           result.user.email,
-          result.user.photoUrl
+          result.user.photoUrl,
+          "user"
         );
       } else {
         Toast.show("Google login interrupted");
 
         this.setState({
-          loading: false
+          loadingUser: false
         });
       }
     } catch (e) {
       Toast.show("Google login interrupted");
 
       this.setState({
-        loading: false
+        loadingUser: false
+      });
+    }
+  };
+
+  signInDriver = async () => {
+    this.setState({
+      loadingDriver: true
+    });
+
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: process.env["GOOGLE_OAUTH_CLIENT_ID"],
+        scopes: ["profile", "email"]
+      });
+
+      if (result.type === "success") {
+        this.props.loginDriver(
+          result.user.name,
+          result.user.email,
+          result.user.photoUrl,
+          "driver"
+        );
+      } else {
+        Toast.show("Google login interrupted");
+
+        this.setState({
+          loadingDriver: false
+        });
+      }
+    } catch (e) {
+      Toast.show("Google login interrupted");
+
+      this.setState({
+        loadingDriver: false
       });
     }
   };
@@ -56,10 +92,18 @@ class WelcomeScreen extends Component {
   componentDidUpdate() {
     if (this.props.user.loggedIn) {
       this.setState({
-        loading: false
+        loadingUser: false,
+        loadingDriver: false
       });
 
-      this.props.navigation.navigate("Main");
+      if(this.props.user.type === "user")
+      {
+        this.props.navigation.navigate("Main");
+      }
+      else
+      {
+        this.props.navigation.navigate("MainDriver");
+      }
     }
   }
 
@@ -71,16 +115,15 @@ class WelcomeScreen extends Component {
           <View style={{ padding: 10 }}>
             <Button
               title="SignIn as User"
-              onPress={this.signIn}
-              loading={this.state.loading}
+              onPress={this.signInUser}
+              loading={this.state.loadingUser}
             />
           </View>
           <View style={{ padding: 10 }}>
             <Button
-              onPress={_ => {
-                console.log("Driver SignIn");
-              }}
+              onPress={this.signInDriver}
               title="SignIn as Auto Driver"
+              loading={this.state.loadingDriver}
             />
           </View>
         </View>
@@ -98,7 +141,8 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    login
+    loginUser,
+    loginDriver
   }
 )(WelcomeScreen);
 

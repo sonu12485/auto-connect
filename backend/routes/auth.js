@@ -67,7 +67,7 @@ router.post("/login/driver", async (req,res) => {
 
         if(!driver)
         {
-            const newDriver = new User({
+            const newDriver = new Driver({
                 email,
                 profilePic,
                 name

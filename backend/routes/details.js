@@ -35,7 +35,8 @@ router.get("/details", getAuthToken, async (req,res) => {
                             name: user.name,
                             profilePic: user.profilePic,
                             money: user.money,
-                            type: "user"
+                            type: "user",
+                            autoNumber: "NA"
                         }).sendStatus(200);
                     }
                     else

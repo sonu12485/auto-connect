@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+import { login } from "../actions/auth";
+
 class AuthLoadingScreen extends Component {
   constructor(props) {
     super(props);

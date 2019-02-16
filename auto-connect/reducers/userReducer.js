@@ -14,7 +14,19 @@ export default function(state = initialState, action) {
         type: action.payload.type,
         name: action.payload.name,
         email: action.payload.email,
-        profilePic: action.payload.profilePic
+        profilePic: action.payload.profilePic,
+        balance: 0
+      };
+
+    case "DRIVER_LOGIN":
+      return {
+        loggedIn: true,
+        type: action.payload.type,
+        name: action.payload.name,
+        email: action.payload.email,
+        profilePic: action.payload.profilePic,
+        balance: 0,
+        autoNumber: null
       };
 
     case "FETCH_USER_DETAILS":
@@ -23,7 +35,9 @@ export default function(state = initialState, action) {
         type: action.payload.type,
         name: action.payload.name,
         email: action.payload.email,
-        profilePic: action.payload.profilePic
+        profilePic: action.payload.profilePic,
+        balance: action.payload.money,
+        autoNumber: action.payload.autoNumber
       };
 
     default:
