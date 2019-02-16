@@ -78,7 +78,6 @@ const mapStateToProps = state => {
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    // Home: DashboardStackNavigator,
     Home: {
       screen: DashboardStackNavigator,
       navigationOptions: {

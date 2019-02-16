@@ -44,10 +44,8 @@ class Pickup extends Component {
     }
   }
 
-  componentDidUpdate()
-  {
-    if(this.props.places && this.state.destination === null)
-    {
+  componentDidUpdate() {
+    if (this.props.places && this.state.destination === null) {
       this.setState({
         destination: {
           lat: this.props.places.find(place => {
@@ -152,13 +150,18 @@ class Pickup extends Component {
         </View>
         <View style={styles.navigateButtonContainer}>
           <Button
+            style={{ width: "100%" }}
             raised={true}
             icon={<Icon name="md-navigate" color="white" size={30} />}
             iconRight
             title="Navigate to auto stand"
             onPress={() => {
               console.log("Navigation button clicked");
-              Linking.openURL(`google.navigation:q=${this.state.destination.lat}+${this.state.destination.long}`);
+              Linking.openURL(
+                `google.navigation:q=${this.state.destination.lat}+${
+                  this.state.destination.long
+                }`
+              );
             }}
           />
         </View>
@@ -203,6 +206,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    width: "100%"
   }
 });
