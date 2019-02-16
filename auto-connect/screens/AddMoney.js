@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
-
 import { Input, Button } from "react-native-elements";
 
 import { fetchUserDetails } from "../actions/userDetails";
@@ -61,18 +60,38 @@ class AddMoney extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Add Money</Text>
-        <Input
-          placeholder="Enter amount of money to be added"
-          keyboardType="numeric"
-          onChangeText={text => this.setState({ amount: text })}
-          value={this.state.amount}
-        />
-        <View style={{ padding: 20 }}>
+        <View style={{ display: "flex", marginBottom: 100 }}>
+          <Text
+            style={{
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: 50
+            }}
+          >
+            Add Money
+          </Text>
+        </View>
+        <View style={{ width: 200, height: 100 }}>
+          <Input
+            // placeholder="Amount"
+            keyboardType="numeric"
+            onChangeText={text => this.setState({ amount: text })}
+            value={this.state.amount}
+            inputStyle={{ width: 50, height: 100, fontSize: 70 }}
+            leftIcon={<Text style={{ fontSize: 70, color: "#626f78" }}>₹</Text>}
+          />
+        </View>
+        <View style={{ padding: 20, width: 200, height: 50, display: "flex" }}>
           <Button
             title="Add Money"
             onPress={this.addMoney}
             loading={this.state.loading}
+            buttonStyle={{
+              // width: 200,
+              height: 50
+              // alignItems: "center",
+              // justifyContent: "center"
+            }}
           />
         </View>
       </View>
@@ -91,6 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#eee"
   }
 });
