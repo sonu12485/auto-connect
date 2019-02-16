@@ -12,7 +12,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 import { Button } from "react-native-elements";
 import { fetchUserDetails } from "../actions/userDetails";
 import { fetchPlaces } from "../actions/places";
-import { fetchRoute } from "../actions/route";
+import { fetchPickupRoute } from "../actions/pickup";
 
 import { connect } from "react-redux";
 
@@ -23,10 +23,10 @@ class Pickup extends Component {
     super(props);
 
     this.state = {
+      destination: null,
       location: null,
       locationErrorMessage: null,
-      start: 11,
-      end: 1
+      loc: 11
     };
   }
 
@@ -70,6 +70,7 @@ class Pickup extends Component {
   };
 
   render() {
+    console.log("HEYYYYY", this.state.location);
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -81,11 +82,21 @@ class Pickup extends Component {
               <View>
                 <Picker
                   mode="dropdown"
-                  selectedValue={this.state.start}
+                  selectedValue={this.state.loc}
                   style={{ height: 60, width: 300 }}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({ start: itemValue })
-                  }
+                  onValueChange={(itemValue, itemIndex) => {
+                    this.setState({ loc: itemValue });
+                    this.setState({
+                      destination: {
+                        lat: this.props.places.find(place => {
+                          return place.id === itemValue;
+                        }).lat,
+                        long: this.props.places.find(place => {
+                          return place.id === itemValue;
+                        }).long
+                      }
+                    });
+                  }}
                 >
                   {this.renderPlaces()}
                 </Picker>
@@ -97,9 +108,9 @@ class Pickup extends Component {
               onPress={() => {
                 console.log("Search clicked");
 
-                this.props.fetchRoute(
-                  this.state.start.toString(),
-                  this.state.end.toString()
+                this.props.fetchPickupRoute(
+                  this.state.location.toString(),
+                  this.state.destination.toString()
                 );
               }}
               name="md-compass"
@@ -120,9 +131,10 @@ class Pickup extends Component {
         </View>
         <View style={styles.navigateButtonContainer}>
           <Button
+            raised={true}
             icon={<Icon name="md-navigate" color="white" size={30} />}
             iconRight
-            title="Navigate to nearest auto stand"
+            title="Navigate to auto stand"
             onPress={() => {
               console.log("Navigation button clicked");
               Linking.openURL("google.navigation:q=100+101");
@@ -146,7 +158,7 @@ export default connect(
   {
     fetchUserDetails,
     fetchPlaces,
-    fetchRoute
+    fetchPickupRoute
   }
 )(Pickup);
 

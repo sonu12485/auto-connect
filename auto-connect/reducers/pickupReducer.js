@@ -5,7 +5,7 @@ const initState = {
 
 export default function(state = initState, action) {
   switch (action.type) {
-    case "FETCH_ROUTE":
+    case "FETCH_PICKUP_ROUTE":
       console.log(action);
       return action.payload;
 

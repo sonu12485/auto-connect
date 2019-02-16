@@ -7,7 +7,7 @@ import colors from "../constants/routeColors";
 
 // PROPS: lat,long
 
-class Map extends React.Component {
+class PickupMap extends React.Component {
   renderRoutePolyline = () => {
     if (this.props.route.polyline !== null) {
       return this.props.route.polyline.map((a, index) => {
@@ -57,8 +57,6 @@ class Map extends React.Component {
       >
         <MapView.Marker
           coordinate={{
-            // latitude: this.props.lat ? this.props.lat : 0,
-            // longitude: this.props.long ? this.props.long : 0
             latitude: 12.973739,
             longitude: 77.641445
           }}
@@ -77,4 +75,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Map);
+export default connect(mapStateToProps)(PickupMap);
