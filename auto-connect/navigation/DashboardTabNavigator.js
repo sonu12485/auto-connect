@@ -1,10 +1,11 @@
 import React from "react";
+import { Text, View } from "react-native";
 import { createBottomTabNavigator } from "react-navigation";
 import Icon from "@expo/vector-icons/Ionicons";
 import Routes from "../screens/Routes";
 import LiveAutos from "../screens/LiveAutos";
 import Pickup from "../screens/Pickup";
-
+// guest@91 guest@91
 const DashboardTabNavigator = createBottomTabNavigator(
   {
     Routes: {
@@ -17,7 +18,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
     LiveAutos: {
       screen: LiveAutos,
       navigationOptions: {
-        tabBarLabel: "LiveAutos",
+        tabBarLabel: "Live Autos",
         tabBarIcon: () => <Icon name="md-timer" size={20} />
       }
     },
