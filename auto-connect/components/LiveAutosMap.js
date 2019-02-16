@@ -52,7 +52,9 @@ class LiveAutosMap extends React.Component {
 
                 if(random === 1)
                 {
-                    return (
+                    if(this.props.type === "auto")
+                    {
+                      return (
                         <MapView.Marker
                             coordinate={{
                             latitude: b.latitude,
@@ -60,7 +62,20 @@ class LiveAutosMap extends React.Component {
                             }}
                             image={require("../assets/images/auto.png")}
                         />
-                    );
+                      );
+                    }
+                    else
+                    {
+                      return (
+                        <MapView.Marker
+                            coordinate={{
+                            latitude: b.latitude,
+                            longitude: b.longitude
+                            }}
+                            image={require("../assets/images/person.png")}
+                        />
+                      );
+                    }
                 }
                 else
                 {
