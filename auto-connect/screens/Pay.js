@@ -37,25 +37,26 @@ class Pay extends Component {
     }
     return (
       <View style={styles.container}>
-        <View style={{ display: "flex", marginBottom: 35 }}>
+        <View style={{ paddingBottom: 100 }} >
           <Text
             style={{
-              justifyContent: "center",
-              alignItems: "center",
               fontWeight: "bold",
-              fontSize: 30
+              fontSize: 30,
+              textAlign: "center"
             }}
           >
-            Scan the QR Code of the driver
+            Scan the QR Code
           </Text>
         </View>
-        <BarCodeScanner
-          onBarCodeScanned={this.handleBarCodeScanned}
-          style={{
-            height: 200,
-            width: 200
-          }}
-        />
+        <View style={{ width: 300, height: 300 }} >
+          <BarCodeScanner
+            onBarCodeScanned={this.handleBarCodeScanned}
+            style={{
+              height: 300,
+              width: 300
+            }}
+          />
+        </View>
       </View>
     );
   }
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "flex-start",
+    padding: 20
   }
 });
