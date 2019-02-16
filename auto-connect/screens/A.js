@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Modal } from "react-native";
+import { View, Text, StyleSheet, Modal, AsyncStorage } from "react-native";
 
 import { Input, Button } from 'react-native-elements';
 
-import { connect } from "react-redux";
+import { fetchUserDetails } from "../actions/userDetails";
+
+import axios from "axios";
+const URL = process.env["BACKEND_URI"];
+
+import { connect } from "react-redux"; 
 
 class A extends Component {
 
@@ -12,6 +17,7 @@ class A extends Component {
     super(props);
 
     this.state = {
+      updateCount: 0,
       autoNumberModal: false,
       autoNumber: "",
       loading: false
@@ -20,14 +26,66 @@ class A extends Component {
 
   componentDidMount()
   {
-    if(this.props.user.autoNumber === "OD 02AL 5656")
+    this.props.fetchUserDetails();
+  }
+
+  componentDidUpdate()
+  {
+    if(this.props.user.autoNumber === "None" 
+    && 
+    this.state.autoNumberModal === false
+    &&
+    this.state.updateCount === 0
+    )
     {
-      this.setState({ autoNumberModal: true });
+      this.setState({
+        autoNumberModal: true,
+        updateCount: 1
+      });
     }
   }
 
-  addAutoNumber = () => {
-    alert(this.state.autoNumber);
+  addAutoNumber = async () => {
+    // alert(this.state.autoNumber);
+    try
+      {
+        this.setState({
+            loading: true
+        });
+
+        const token = await AsyncStorage.getItem("token");
+
+        await axios({
+            url: `${URL}autoNumber`,
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            data: {
+              autoNumber: this.state.autoNumber,
+            }
+        });
+
+        this.setState({
+          autoNumberModal: false,
+          autoNumber: "",
+          loading: false
+        });
+
+        this.props.fetchUserDetails();
+
+      }
+      catch(err)
+      {
+          console.log("error", err);
+      }
+
+      this.setState({
+        autoNumberModal: false,
+        autoNumber: "",
+        loading: false
+      });
   }
 
   render() {
@@ -66,7 +124,9 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(A);
+export default connect(mapStateToProps, {
+  fetchUserDetails
+})(A);
 
 const styles = StyleSheet.create({
   container: {
