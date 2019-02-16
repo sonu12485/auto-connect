@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 const URL = process.env["BACKEND_URI"];
 
-class FinalPay extends Component {
+class AddMoney extends Component {
   constructor(props)
   {
     super(props);
@@ -76,6 +76,7 @@ class FinalPay extends Component {
         <Button
             title="Add Money"
             onPress={this.addMoney}
+            loading={this.state.loading}
         />
         </View>
       </View>
@@ -85,7 +86,7 @@ class FinalPay extends Component {
 
 export default connect(null, {
     fetchUserDetails
-})(FinalPay);
+})(AddMoney);
 
 const styles = StyleSheet.create({
   container: {

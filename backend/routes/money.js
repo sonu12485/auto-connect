@@ -86,8 +86,8 @@ router.post("/transfer", getAuthToken, async (req,res) => {
                         res.send("Insufficient Balance").sendStatus(403);
                     }
 
-                    const userNewAccountBalance = userAccountBalance - amount;
-                    const driverNewAccountBalance = driverAccountBalance + amount;
+                    const userNewAccountBalance = Number(userAccountBalance) - Number(amount);
+                    const driverNewAccountBalance = Number(driverAccountBalance) + Number(amount);
 
                     await user.set("money", userNewAccountBalance);
                     await driver.set("money", driverNewAccountBalance);
