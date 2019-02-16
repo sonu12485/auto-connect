@@ -150,8 +150,7 @@ class Pickup extends Component {
         </View>
         <View style={styles.navigateButtonContainer}>
           <Button
-            style={{ width: "100%" }}
-            raised={true}
+            buttonStyle={{ width: 600, height: 55 }}
             icon={<Icon name="md-navigate" color="white" size={30} />}
             iconRight
             title="Navigate to auto stand"
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   mapContainer: {
-    height: 450,
+    height: 520,
     width: "100%"
   },
   inputContainer: {
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   navigateButtonContainer: {
-    marginTop: 20,
+    // marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
