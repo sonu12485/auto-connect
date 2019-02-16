@@ -36,7 +36,8 @@ router.get("/details", getAuthToken, async (req,res) => {
                             profilePic: user.profilePic,
                             money: user.money,
                             type: "user",
-                            autoNumber: "NA"
+                            autoNumber: "NA",
+                            transactions: user.transactions
                         }).sendStatus(200);
                     }
                     else
@@ -66,7 +67,8 @@ router.get("/details", getAuthToken, async (req,res) => {
                             profilePic: driver.profilePic,
                             money: driver.money,
                             autoNumber: driver.autoNumber,
-                            type: "driver"
+                            type: "driver",
+                            transactions: driver.transactions
                         }).sendStatus(200);
                     }
                     else

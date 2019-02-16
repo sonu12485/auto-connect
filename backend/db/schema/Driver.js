@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const TransactionSchema = require("./TransactionSchema");
+
 const DriverSchema = new Schema({
     email: {
         type: String,
@@ -23,6 +25,9 @@ const DriverSchema = new Schema({
         type: Number,
         required: true,
         default: 50
+    },
+    transactions: {
+        type: [TransactionSchema]
     }
 });
 

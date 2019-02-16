@@ -38,6 +38,13 @@ router.post("/addMoney", getAuthToken, async (req,res) => {
                     console.log(userNewAccountBalance, amount);
 
                     await user.set("money", userNewAccountBalance);
+                    await user.transactions.push({
+                        from: "Self",
+                        to: "",
+                        amount: Number(amount),
+                        timeStamp: Date.now().toString(),
+                        operation: "credit"
+                    });
                     await user.save();
 
                     console.log("hello");
@@ -91,6 +98,20 @@ router.post("/transfer", getAuthToken, async (req,res) => {
 
                     await user.set("money", userNewAccountBalance);
                     await driver.set("money", driverNewAccountBalance);
+                    await user.transactions.push({
+                        from: "",
+                        to: driverEmail,
+                        amount: Number(amount),
+                        timeStamp: Date.now().toString(),
+                        operation: "debit"
+                    });
+                    await driver.transactions.push({
+                        from: email,
+                        to: "",
+                        amount: Number(amount),
+                        timeStamp: Date.now().toString(),
+                        operation: "credit"
+                    })
                     await user.save();
                     await driver.save();
 
