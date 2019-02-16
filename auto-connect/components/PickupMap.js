@@ -8,35 +8,33 @@ import colors from "../constants/routeColors";
 // PROPS: lat,long
 
 class PickupMap extends React.Component {
+
   renderRoutePolyline = () => {
-    if (this.props.route.polyline !== null) {
-      return this.props.route.polyline.map((a, index) => {
-        return (
-          <MapView.Polyline
-            coordinates={a}
-            strokeWidth={4}
-            strokeColor={colors[index]}
-          />
-        );
-      });
+
+    if (this.props.pickUpRoute.route !== null) {
+      return (
+        <MapView.Polyline
+          coordinates={this.props.pickUpRoute.route}
+          strokeWidth={4}
+          strokeColor={colors[0]}
+        />
+      );
     } else {
       return null;
     }
   };
 
   renderRouteMarkers = () => {
-    if (this.props.route.route !== null) {
-      return this.props.route.route.map(a => {
-        return (
-          <MapView.Marker
-            coordinate={{
-              latitude: a.lat,
-              longitude: a.long
-            }}
-            title={a.name}
-          />
-        );
-      });
+    if (this.props.pickUpRoute.destination !== null) {
+      return (
+        <MapView.Marker
+          coordinate={{
+            latitude: this.props.pickUpRoute.destination.lat,
+            longitude: this.props.pickUpRoute.destination.long
+          }}
+          title="Auto Pick Up Point"
+        />
+      );
     } else {
       return null;
     }
@@ -47,18 +45,20 @@ class PickupMap extends React.Component {
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          // latitude: this.props.lat,
-          // longitude: this.props.long,
-          latitude: 12.973739,
-          longitude: 77.641445,
+          latitude: this.props.lat,
+          longitude: this.props.long,
+          // latitude: 12.973739,
+          // longitude: 77.641445,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
       >
         <MapView.Marker
           coordinate={{
-            latitude: 12.973739,
-            longitude: 77.641445
+            latitude: this.props.lat ? this.props.lat : 0,
+            longitude: this.props.long ? this.props.long : 0
+            // latitude: 12.973739,
+            // longitude: 77.641445
           }}
           title="Your Location"
         />
@@ -71,7 +71,7 @@ class PickupMap extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    route: state.route
+    pickUpRoute: state.pickUpRoute
   };
 };
 

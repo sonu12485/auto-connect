@@ -16,7 +16,7 @@ import { fetchPickupRoute } from "../actions/pickup";
 
 import { connect } from "react-redux";
 
-import Map from "../components/Map";
+import Map from "../components/PickupMap";
 
 class Pickup extends Component {
   constructor(props) {
@@ -41,6 +41,23 @@ class Pickup extends Component {
       });
     } else {
       this._getLocationAsync();
+    }
+  }
+
+  componentDidUpdate()
+  {
+    if(this.props.places && this.state.destination === null)
+    {
+      this.setState({
+        destination: {
+          lat: this.props.places.find(place => {
+            return place.id === this.state.loc;
+          }).lat,
+          long: this.props.places.find(place => {
+            return place.id === this.state.loc;
+          }).long
+        }
+      });
     }
   }
 
@@ -70,14 +87,13 @@ class Pickup extends Component {
   };
 
   render() {
-    console.log("HEYYYYY", this.state.location);
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <View>
             <View>
               <View>
-                <Text>Enter your current location</Text>
+                <Text>Select a PickUp Point</Text>
               </View>
               <View>
                 <Picker
@@ -108,10 +124,15 @@ class Pickup extends Component {
               onPress={() => {
                 console.log("Search clicked");
 
-                this.props.fetchPickupRoute(
-                  this.state.location.toString(),
-                  this.state.destination.toString()
-                );
+                const to = this.state.destination;
+                const from = {
+                  lat: this.state.location.coords.latitude,
+                  long: this.state.location.coords.longitude
+                };
+
+                console.log(from, to);
+
+                this.props.fetchPickupRoute(from, to);
               }}
               name="md-compass"
               size={30}
@@ -137,7 +158,7 @@ class Pickup extends Component {
             title="Navigate to auto stand"
             onPress={() => {
               console.log("Navigation button clicked");
-              Linking.openURL("google.navigation:q=100+101");
+              Linking.openURL(`google.navigation:q=${this.state.destination.lat}+${this.state.destination.long}`);
             }}
           />
         </View>

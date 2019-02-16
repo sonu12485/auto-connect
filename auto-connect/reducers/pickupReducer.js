@@ -1,6 +1,6 @@
 const initState = {
   route: null,
-  polyline: null
+  destination: null
 };
 
 export default function(state = initState, action) {
