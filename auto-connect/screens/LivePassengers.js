@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 
 import Map from "../components/LiveAutosMap";
 
-class LiveAutos extends Component {
+class LivePassengers extends Component {
   constructor(props) {
     super(props);
 
@@ -127,7 +127,7 @@ class LiveAutos extends Component {
               this.state.location &&
               Number(this.state.location.coords.longitude)
             }
-            type="auto"
+            type="passenger"
           />
         </View>
       </View>
@@ -149,7 +149,7 @@ export default connect(
     fetchPlaces,
     fetchRoute
   }
-)(LiveAutos);
+)(LivePassengers);
 
 const styles = StyleSheet.create({
   container: {

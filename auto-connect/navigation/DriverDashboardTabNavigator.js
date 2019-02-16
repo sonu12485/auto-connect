@@ -1,13 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "react-navigation";
-import A from "../screens/A";
-import B from "../screens/B";
+import DriverRoutesScreen from "../screens/DriverRoutes";
+import LivePassengersScreen from "../screens/LivePassengers";
 import C from "../screens/C";
 
 const DashboardTabNavigator = createBottomTabNavigator(
   {
-    A,
-    B,
+    Routes: DriverRoutesScreen,
+    LivePassengers: LivePassengersScreen,
     C
   },
   {
