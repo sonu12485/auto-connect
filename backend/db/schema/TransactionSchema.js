@@ -3,12 +3,10 @@ const Schema = mongoose.Schema;
 
 const TransactionSchema = new Schema({
     from: {
-        type: String,
-        required: true
+        type: String
     },
     to: {
-        type: String,
-        required: true
+        type: String
     },
     amount: {
         type: Number,
