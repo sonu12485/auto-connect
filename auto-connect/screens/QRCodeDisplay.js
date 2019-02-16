@@ -11,7 +11,7 @@ class QRCodeDisplay extends Component {
       <View style={styles.container}>
         <View style={{ justifyContent: "flex-start" }}>
           <Text style={{ fontSize: 40, fontWeight: "bold" }}>
-            My QR Code{"\n\n\n"}
+            Pay me here{"\n\n\n"}
           </Text>
         </View>
         <QRCode value={this.props.user.email} size={250} />

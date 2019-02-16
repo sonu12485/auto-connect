@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 const slides = [
   {
     key: "intro1",
-    title: "Auto Connect",
+    title: "AutoConnect",
     titleStyle: styles.title,
     text: "🔗 Connecting 🔗\nPeople 🧑 with Autos 🚦",
     textStyle: styles.text,

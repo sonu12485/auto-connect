@@ -122,7 +122,7 @@ class WelcomeScreen extends Component {
           </View>
 
           <View style={styles.textContainer}>
-            <Text style={styles.heading}>Auto Connect</Text>
+            <Text style={styles.heading}>AutoConnect</Text>
           </View>
 
           <View style={styles.btnContainer}>
