@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const TransactionSchema = require("./TransactionSchema");
+
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -20,6 +22,9 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         default: 50
+    },
+    transactions: {
+        type: [TransactionSchema]
     }
 });
 
