@@ -7,7 +7,7 @@ import {
   AsyncStorage
 } from "react-native";
 
-import { fetchUserDetails } from "../actions/userDetails"; 
+import { fetchUserDetails } from "../actions/userDetails";
 
 import { connect } from "react-redux";
 
@@ -23,27 +23,22 @@ class AuthLoadingScreen extends Component {
     const expiresIn = await AsyncStorage.getItem("expiresIn");
 
     if (Date.now() < Number(expiresIn) && token) {
-
-      if(this.props.user.type !== null)
-      {
-        if (this.props.user.type === "user") this.props.navigation.navigate("Main");
+      if (this.props.user.type !== null) {
+        if (this.props.user.type === "user")
+          this.props.navigation.navigate("Main");
         else this.props.navigation.navigate("MainDriver");
+      } else {
+        this.props.fetchUserDetails();
       }
-      else
-      {
-        this.props.fetchUserDetails(); 
-      }
-      
     } else {
-      this.props.navigation.navigate("Welcome");
+      this.props.navigation.navigate("AppIntro");
     }
   };
 
-  componentDidUpdate()
-  {
-    if(this.props.user.type !== null)
-    {
-      if (this.props.user.type === "user") this.props.navigation.navigate("Main");
+  componentDidUpdate() {
+    if (this.props.user.type !== null) {
+      if (this.props.user.type === "user")
+        this.props.navigation.navigate("Main");
       else this.props.navigation.navigate("MainDriver");
     }
   }
