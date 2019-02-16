@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import QRCode from 'react-native-qrcode';
+import QRCode from "react-native-qrcode";
 
 import { connect } from "react-redux";
 
@@ -9,10 +9,12 @@ class QRCodeDisplay extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <QRCode
-          value={this.props.user.email}
-          size={250}
-        />
+        <View style={{ justifyContent: "flex-start" }}>
+          <Text style={{ fontSize: 40, fontWeight: "bold" }}>
+            My QR Code{"\n\n\n"}
+          </Text>
+        </View>
+        <QRCode value={this.props.user.email} size={250} />
       </View>
     );
   }

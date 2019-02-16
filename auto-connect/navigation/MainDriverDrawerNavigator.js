@@ -23,32 +23,63 @@ class customDrawerComponent extends Component {
         <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
           <View
             style={{
-              marginTop: 20
+              marginTop: 20,
+              display: "flex"
             }}
           >
-            <View style={{ padding: 20 }}>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: this.props.user.profilePic }}
                 style={{ height: 120, width: 120, borderRadius: 60 }}
               />
             </View>
-            <Text style={{ fontSize: 20, padding: 10 }}>
-              {this.props.user.name}
-            </Text>
-            <Text style={{ padding: 10 }} >
-              Balance - &#8377; {this.props.user.balance}
-            </Text>
-            <Text style={{ padding: 10 }} >
-              Auto Number - {this.props.user.autoNumber}
-            </Text>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  padding: 10,
+                  justifyContent: "center"
+                }}
+              >
+                {this.props.user.name}
+              </Text>
+            </View>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Text style={{ fontSize: 40, color: "orange" }}>
+                &#8377; {this.props.user.balance}
+              </Text>
+            </View>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Text
+                style={{ fontSize: 25, fontWeight: "bold", color: "#2F4F4F" }}
+              >
+                {this.props.user.autoNumber}
+              </Text>
+            </View>
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
-            <TouchableOpacity onPress={async () => {
-              await AsyncStorage.clear();
-              this.props.navigation.navigate("AuthLoading");
-            }} 
-            style={styles.logoutContainer}
+            <TouchableOpacity
+              onPress={async () => {
+                await AsyncStorage.clear();
+                this.props.navigation.navigate("AuthLoading");
+              }}
+              style={styles.logoutContainer}
             >
               <View>
                 <Icon name="md-log-out" size={30} />
@@ -74,13 +105,28 @@ const mapStateToProps = state => {
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    Home: DriverDashboardStackNavigator,
-    QRCodeDisplay: QRCodeDisplayScreen
+    Home: {
+      screen: DriverDashboardStackNavigator,
+      navigationOptions: {
+        drawerLabel: "Home",
+        drawerIcon: () => <Icon name="md-home" size={30} />
+      }
+    },
+    QRCodeDisplay: {
+      screen: QRCodeDisplayScreen,
+      navigationOptions: {
+        drawerLabel: "Display QR Code",
+        drawerIcon: () => <Icon name="md-qr-scanner" size={30} />
+      }
+    }
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),
     contentOptions: {
-      activeTintColor: "rebeccapurple"
+      activeTintColor: "rebeccapurple",
+      itemStyle: {
+        height: 70
+      }
     }
   }
 );
@@ -93,7 +139,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingLeft: 15
+    paddingLeft: 15,
+    paddingTop: 10
   },
   drawerElements: {
     fontSize: 16,
