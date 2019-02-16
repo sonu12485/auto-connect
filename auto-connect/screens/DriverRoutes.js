@@ -85,41 +85,53 @@ class DriverRoutes extends Component {
 
   addAutoNumber = async () => {
     // alert(this.state.autoNumber);
-    try {
-      this.setState({
-        loading: true
-      });
 
-      const token = await AsyncStorage.getItem("token");
+    const regex = /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/;
+    const regexResult = regex.test(this.state.autoNumber.toString().toUpperCase());
+    console.log(regexResult);
 
-      await axios({
-        url: `${URL}autoNumber`,
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        data: {
-          autoNumber: this.state.autoNumber
-        }
-      });
-
+    if(regexResult)
+    {
+      try {
+        this.setState({
+          loading: true
+        });
+  
+        const token = await AsyncStorage.getItem("token");
+  
+        await axios({
+          url: `${URL}autoNumber`,
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          data: {
+            autoNumber: this.state.autoNumber
+          }
+        });
+  
+        this.setState({
+          autoNumberModal: false,
+          autoNumber: "",
+          loading: false
+        });
+  
+        this.props.fetchUserDetails();
+      } catch (err) {
+        console.log("error", err);
+      }
+  
       this.setState({
         autoNumberModal: false,
         autoNumber: "",
         loading: false
       });
-
-      this.props.fetchUserDetails();
-    } catch (err) {
-      console.log("error", err);
     }
-
-    this.setState({
-      autoNumberModal: false,
-      autoNumber: "",
-      loading: false
-    });
+    else
+    {
+      alert("Invalid Vehicle Number");
+    }
   };
 
   renderPlaces = () => {
@@ -175,7 +187,7 @@ class DriverRoutes extends Component {
               Enter your auto number
             </Text>
             <Input
-              placeholder="XX-XX-XX-XXXX"
+              placeholder="XX XX XX XXXX"
               onChangeText={text => this.setState({ autoNumber: text })}
               value={this.state.autoNumber}
               inputStyle={{ width: 50, height: 30, fontSize: 25 }}
