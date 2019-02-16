@@ -5,9 +5,13 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  Dimensions,
-  Image
+  StyleSheet,
+  Image,
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
+import Icon from "@expo/vector-icons/Ionicons";
+
 import DriverDashboardStackNavigator from "./DriverDashboardStackNavigator";
 import QRCodeDisplayScreen from "../screens/QRCodeDisplay";
 import { connect } from "react-redux";
@@ -40,6 +44,19 @@ class customDrawerComponent extends Component {
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
+            <TouchableOpacity onPress={async () => {
+              await AsyncStorage.clear();
+              this.props.navigation.navigate("AuthLoading");
+            }} 
+            style={styles.logoutContainer}
+            >
+              <View>
+                <Icon name="md-log-out" size={30} />
+              </View>
+              <View>
+                <Text style={styles.drawerElements}>{"     "}Log Out</Text>
+              </View>
+            </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
       );
@@ -69,3 +86,19 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 export default AppDrawerNavigator;
+
+const styles = StyleSheet.create({
+  logoutContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingLeft: 15
+  },
+  drawerElements: {
+    fontSize: 16,
+    fontWeight: "bold",
+    paddingLeft: 15,
+    color: "#273444"
+  }
+});

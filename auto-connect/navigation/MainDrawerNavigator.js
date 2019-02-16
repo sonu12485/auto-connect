@@ -5,8 +5,10 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  Dimensions,
-  Image
+  StyleSheet,
+  Image,
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
@@ -61,6 +63,19 @@ class customDrawerComponent extends Component {
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
+            <TouchableOpacity onPress={async () => {
+              await AsyncStorage.clear();
+              this.props.navigation.navigate("AuthLoading");
+            }} 
+            style={styles.logoutContainer}
+            >
+              <View>
+                <Icon name="md-log-out" size={30} />
+              </View>
+              <View>
+                <Text style={styles.drawerElements}>{"     "}Log Out</Text>
+              </View>
+            </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
       );
@@ -99,13 +114,6 @@ const AppDrawerNavigator = createDrawerNavigator(
         drawerIcon: () => <Icon name="md-wallet" size={30} />
       }
     }
-    // LogOut: {
-    //   screen: LogOutScreen,
-    //   navigationOptions: {
-    //     drawerLabel: "Log Out",
-    //     drawerIcon: () => <Icon name="md-log-out" size={30} />
-    //   }
-    // }
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),
@@ -120,3 +128,19 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 export default AppDrawerNavigator;
+
+const styles = StyleSheet.create({
+  logoutContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingLeft: 15
+  },
+  drawerElements: {
+    fontSize: 16,
+    fontWeight: "bold",
+    paddingLeft: 15,
+    color: "#273444"
+  }
+});
