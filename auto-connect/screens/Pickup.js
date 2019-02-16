@@ -91,7 +91,7 @@ class Pickup extends Component {
           <View>
             <View>
               <View>
-                <Text>Select a PickUp Point</Text>
+                <Text>Select a Pickup Point</Text>
               </View>
               <View>
                 <Picker
