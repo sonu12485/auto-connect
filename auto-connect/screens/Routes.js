@@ -61,6 +61,24 @@ class HomeScreen extends Component {
     }
   };
 
+  calculateFare = () => {
+
+    if(this.props.route.route !== null)
+    {
+      const placesNumber = this.props.route.route.length;
+      const lowerCost = placesNumber*15 - 10;
+      const higherCost = placesNumber*15 + 10;
+
+      return (
+        <Text>Estimated Total Fare - &#8377; {lowerCost} - {higherCost}</Text>
+      );
+    }
+    else
+    {
+      return null;
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -130,6 +148,9 @@ class HomeScreen extends Component {
             }
           />
         </View>
+        <View style={{ padding: 10 }} >
+            {this.calculateFare()}
+        </View>
       </View>
     );
   }
@@ -158,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   mapContainer: {
-    height: 497,
+    height: 430,
     width: "100%"
   },
   inputContainer: {
