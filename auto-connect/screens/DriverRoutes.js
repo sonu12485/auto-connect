@@ -139,9 +139,21 @@ class DriverRoutes extends Component {
       const higherCost = placesNumber * 15 + 10;
 
       return (
-        <Text>
-          Estimated Total Fare - &#8377; {lowerCost} - {higherCost}
-        </Text>
+        <View style={{ display: "flex" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "row"
+            }}
+          >
+            <Text style={{ color: "#574f4f" }}>Estimated Total Fare : </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+              &#8377; {lowerCost} - &#8377; {higherCost}
+            </Text>
+          </View>
+        </View>
       );
     } else {
       return null;
@@ -272,11 +284,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: Dimensions.get("window").height / 5
+    justifyContent: "center"
   },
   mapContainer: {
-    height: 430,
+    height: 450,
     width: "100%"
   },
   inputContainer: {
