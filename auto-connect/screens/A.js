@@ -26,7 +26,7 @@ class A extends Component {
 
   componentDidMount()
   {
-    this.props.fetchUserDetails();
+    this.props.fetchUserDetails(); 
   }
 
   componentDidUpdate()
