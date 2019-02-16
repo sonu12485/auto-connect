@@ -30,6 +30,12 @@ class customDrawerComponent extends Component {
             <Text style={{ fontSize: 20, padding: 10 }}>
               {this.props.user.name}
             </Text>
+            <Text style={{ padding: 10 }} >
+              Balance - &#8377; {this.props.user.balance}
+            </Text>
+            <Text style={{ padding: 10 }} >
+              Auto Number - {this.props.user.autoNumber}
+            </Text>
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
