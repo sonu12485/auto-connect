@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   AsyncStorage
 } from "react-native";
+import { connect } from "react-redux";
 
 class AuthLoadingScreen extends Component {
   constructor(props) {
@@ -13,19 +14,17 @@ class AuthLoadingScreen extends Component {
     this.loadApp();
   }
 
+  componentDidMount() {}
   loadApp = async () => {
     const token = await AsyncStorage.getItem("token");
     const expiresIn = await AsyncStorage.getItem("expiresIn");
 
-    if(Date.now() < Number(expiresIn) && token)
-    {
-      this.props.navigation.navigate("Main");
-    }
-    else
-    {
+    if (Date.now() < Number(expiresIn) && token) {
+      if (user.type === "user") this.props.navigation.navigate("Main");
+      else this.props.navigation.navigate("MainDriver");
+    } else {
       this.props.navigation.navigate("Welcome");
     }
-
   };
 
   render() {
@@ -36,7 +35,18 @@ class AuthLoadingScreen extends Component {
     );
   }
 }
-export default AuthLoadingScreen;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    login
+  }
+)(AuthLoadingScreen);
 
 const styles = StyleSheet.create({
   container: {

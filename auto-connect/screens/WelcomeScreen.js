@@ -3,27 +3,24 @@ import { View, Text, StyleSheet } from "react-native";
 
 import { Button } from "react-native-elements";
 
-import { Google } from 'expo';
+import { Google } from "expo";
 
 import { connect } from "react-redux";
 
 import { login } from "../actions/auth";
 
-import Toast from 'react-native-simple-toast';
+import Toast from "react-native-simple-toast";
 
 class WelcomeScreen extends Component {
-
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
 
     this.state = {
       loading: false
-    }
+    };
   }
 
   signIn = async () => {
-
     this.setState({
       loading: true
     });
@@ -35,33 +32,29 @@ class WelcomeScreen extends Component {
       });
 
       if (result.type === "success") {
-
-        this.props.login(result.user.name, result.user.email, result.user.photoUrl);
-
+        this.props.login(
+          result.user.name,
+          result.user.email,
+          result.user.photoUrl
+        );
       } else {
-
         Toast.show("Google login interrupted");
-        
+
         this.setState({
           loading: false
         });
       }
-
     } catch (e) {
-
       Toast.show("Google login interrupted");
 
       this.setState({
         loading: false
       });
     }
+  };
 
-  }
-
-  componentDidUpdate()
-  {
-    if(this.props.user.loggedIn)
-    {
+  componentDidUpdate() {
+    if (this.props.user.loggedIn) {
       this.setState({
         loading: false
       });
@@ -75,20 +68,20 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         <Text>WelcomeScreen</Text>
         <View>
-          <View style={{ padding: 10 }} >
-          <Button
-            title="SignIn as User"
-            onPress={this.signIn}
-            loading={this.state.loading}
-          />
+          <View style={{ padding: 10 }}>
+            <Button
+              title="SignIn as User"
+              onPress={this.signIn}
+              loading={this.state.loading}
+            />
           </View>
-          <View style={{ padding: 10 }} >
-          <Button
-            onPress={_ => {
-              console.log("Driver SignIn");
-            }}
-            title="SignIn as Auto Driver"
-          />
+          <View style={{ padding: 10 }}>
+            <Button
+              onPress={_ => {
+                console.log("Driver SignIn");
+              }}
+              title="SignIn as Auto Driver"
+            />
           </View>
         </View>
       </View>
@@ -96,15 +89,18 @@ class WelcomeScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.user
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {
-  login
-})(WelcomeScreen);
+export default connect(
+  mapStateToProps,
+  {
+    login
+  }
+)(WelcomeScreen);
 
 const styles = StyleSheet.create({
   container: {
