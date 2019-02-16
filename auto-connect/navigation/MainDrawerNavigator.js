@@ -9,6 +9,7 @@ import {
   Image
 } from "react-native";
 import DashboardStackNavigator from "./DashboardStackNavigator";
+import PayScreen from "../screens/Pay";
 import { connect } from "react-redux";
 
 class customDrawerComponent extends Component {
@@ -30,6 +31,9 @@ class customDrawerComponent extends Component {
             <Text style={{ fontSize: 20, padding: 10 }}>
               {this.props.user.name}
             </Text>
+            <Text style={{ padding: 10 }} >
+              Balance - &#8377; {this.props.user.balance}
+            </Text>
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
@@ -50,7 +54,8 @@ const mapStateToProps = state => {
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    Home: DashboardStackNavigator
+    Home: DashboardStackNavigator,
+    Pay: PayScreen
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),
