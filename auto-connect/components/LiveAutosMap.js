@@ -34,7 +34,7 @@ class LiveAutosMap extends React.Component {
               longitude: a.long
             }}
             title={a.name}
-            description="Estimated Wait Time - 5-6 mins"
+            description={a.waitTime}
           />
         );
       });
