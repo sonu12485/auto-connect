@@ -48,6 +48,9 @@ app.use(locationRoutes);
 const routeRoutes = require("./routes/route");
 app.use(routeRoutes);
 
+const moneyRoute = require("./routes/money");
+app.use(moneyRoute);
+
 app.listen(PORT, () => {
     console.log(`App listening at port ${PORT}`);
 });

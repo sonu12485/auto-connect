@@ -9,7 +9,8 @@ import {
   Image
 } from "react-native";
 import DashboardStackNavigator from "./DashboardStackNavigator";
-import PayScreen from "../screens/Pay";
+import PayStackNavigator from "./PayStackNavigator";
+import AddMoneyScreen from "../screens/AddMoney";
 import { connect } from "react-redux";
 
 class customDrawerComponent extends Component {
@@ -55,7 +56,8 @@ const mapStateToProps = state => {
 const AppDrawerNavigator = createDrawerNavigator(
   {
     Home: DashboardStackNavigator,
-    Pay: PayScreen
+    Pay: PayStackNavigator,
+    AddMoney: AddMoneyScreen
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),
