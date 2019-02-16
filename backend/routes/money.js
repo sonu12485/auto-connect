@@ -33,9 +33,14 @@ router.post("/addMoney", getAuthToken, async (req,res) => {
                     const user = await User.findOne({ email });
 
                     const userAccountBalance = user.money;
-                    const userNewAccountBalance = userAccountBalance + amount;
+                    const userNewAccountBalance = Number(userAccountBalance) + Number(amount);
 
-                    await user.update("money", userNewAccountBalance);
+                    console.log(userNewAccountBalance, amount);
+
+                    await user.set("money", userNewAccountBalance);
+                    await user.save();
+
+                    console.log("hello");
                     
                     res.send("Money Transfer Done").sendStatus(200);
                 }
@@ -81,11 +86,13 @@ router.post("/transfer", getAuthToken, async (req,res) => {
                         res.send("Insufficient Balance").sendStatus(403);
                     }
 
-                    const userNewAccountBalance = userAccountBalance - amount;
-                    const driverNewAccountBalance = driverAccountBalance + amount;
+                    const userNewAccountBalance = Number(userAccountBalance) - Number(amount);
+                    const driverNewAccountBalance = Number(driverAccountBalance) + Number(amount);
 
-                    await user.update("money", userNewAccountBalance);
-                    await driver.update("money", driverNewAccountBalance);
+                    await user.set("money", userNewAccountBalance);
+                    await driver.set("money", driverNewAccountBalance);
+                    await user.save();
+                    await driver.save();
 
                     res.send("Money Transfer Done").sendStatus(200);
 

@@ -25,6 +25,7 @@ class Pay extends Component {
   handleBarCodeScanned = ({ type, data }) => {
     console.log(data);
     this.props.storeQRCodeData(data);
+    this.props.navigation.navigate("FinalPay");
   }
 
   render() {
