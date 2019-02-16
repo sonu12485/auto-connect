@@ -99,6 +99,13 @@ const AppDrawerNavigator = createDrawerNavigator(
         drawerIcon: () => <Icon name="md-wallet" size={30} />
       }
     }
+    // LogOut: {
+    //   screen: LogOutScreen,
+    //   navigationOptions: {
+    //     drawerLabel: "Log Out",
+    //     drawerIcon: () => <Icon name="md-log-out" size={30} />
+    //   }
+    // }
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),
