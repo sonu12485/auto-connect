@@ -35,7 +35,12 @@ router.post("/addMoney", getAuthToken, async (req,res) => {
                     const userAccountBalance = user.money;
                     const userNewAccountBalance = userAccountBalance + amount;
 
-                    await user.update("money", userNewAccountBalance);
+                    console.log(userNewAccountBalance, amount);
+
+                    await user.set("money", userNewAccountBalance);
+                    await user.save();
+
+                    console.log("hello");
                     
                     res.send("Money Transfer Done").sendStatus(200);
                 }
