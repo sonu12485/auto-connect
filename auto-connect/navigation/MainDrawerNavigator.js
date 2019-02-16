@@ -63,11 +63,12 @@ class customDrawerComponent extends Component {
           </View>
           <ScrollView>
             <DrawerItems {...this.props} />
-            <TouchableOpacity onPress={async () => {
-              await AsyncStorage.clear();
-              this.props.navigation.navigate("AuthLoading");
-            }} 
-            style={styles.logoutContainer}
+            <TouchableOpacity
+              onPress={async () => {
+                await AsyncStorage.clear();
+                this.props.navigation.navigate("AuthLoading");
+              }}
+              style={styles.logoutContainer}
             >
               <View>
                 <Icon name="md-log-out" size={30} />
@@ -135,10 +136,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingLeft: 15
+    paddingLeft: 15,
+    paddingTop: 10
   },
   drawerElements: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
     paddingLeft: 15,
     color: "#273444"
