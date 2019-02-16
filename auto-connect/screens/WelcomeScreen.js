@@ -96,12 +96,9 @@ class WelcomeScreen extends Component {
         loadingDriver: false
       });
 
-      if(this.props.user.type === "user")
-      {
+      if (this.props.user.type === "user") {
         this.props.navigation.navigate("Main");
-      }
-      else
-      {
+      } else {
         this.props.navigation.navigate("MainDriver");
       }
     }
