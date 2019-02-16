@@ -26,8 +26,6 @@ class FinalPay extends Component {
 
         const token = await AsyncStorage.getItem("token");
 
-        console.log(URL);
-
         await axios({
             url: `${URL}addMoney`,
             method: "post",
