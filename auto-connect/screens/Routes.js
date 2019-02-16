@@ -66,55 +66,56 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <View>
-          <View>
             <View>
-              <Text>Enter start Location</Text>
+              <View>
+                <Text>Enter start Location</Text>
+              </View>
+              <View>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={this.state.start}
+                  style={{ height: 60, width: 410 }}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ start: itemValue })
+                  }
+                >
+                  {this.renderPlaces()}
+                </Picker>
+              </View>
             </View>
+
             <View>
-              <Picker
-                mode="dropdown"
-                selectedValue={this.state.start}
-                style={{ height: 60, width: 300 }}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({ start: itemValue })
-                }
-              >
-                {this.renderPlaces()}
-              </Picker>
+              <View>
+                <Text>Enter end Location</Text>
+              </View>
+              <View>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={this.state.end}
+                  style={{
+                    height: 60,
+                    width: 410
+                  }}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ end: itemValue })
+                  }
+                >
+                  {this.renderPlaces()}
+                </Picker>
+              </View>
             </View>
           </View>
-          
-          <View>
-            <View>
-              <Text>Enter end Location</Text>
-            </View>
-            <View>
-              <Picker
-                mode="dropdown"
-                selectedValue={this.state.end}
-                style={{ height: 60, width: 300 }}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({ end: itemValue })
-                }
-              >
-                {this.renderPlaces()}
-              </Picker>
-            </View>
-          </View>
-          </View>
-          <View style={{ paddingLeft: 10 }} >
+          <View style={{ paddingLeft: 10 }}>
             <Icon
               onPress={() => {
-                console.log("Search clicked")
-              
                 this.props.fetchRoute(
-                  this.state.start.toString(), 
+                  this.state.start.toString(),
                   this.state.end.toString()
                 );
-
               }}
               name="md-search"
               size={30}
+              style={{}}
             />
           </View>
         </View>
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   mapContainer: {
-    height: 450,
+    height: 497,
     width: "100%"
   },
   inputContainer: {
