@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 
 const styles = StyleSheet.create({
@@ -99,7 +99,14 @@ export default class App extends React.Component {
     // if (this.state.showRealApp) {
     //   return <App />;
     // } else {
-    return <AppIntroSlider slides={slides} onDone={this._onDone} />;
+    return (
+      <AppIntroSlider
+        bottomButton
+        doneLabel="Get Started"
+        slides={slides}
+        onDone={this._onDone}
+      />
+    );
     //}
   }
 }
