@@ -74,7 +74,7 @@ class HomeScreen extends Component {
                 <Picker
                   mode="dropdown"
                   selectedValue={this.state.start}
-                  style={{ height: 60, width: 410 }}
+                  style={{ height: 60, width: 300 }}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ start: itemValue })
                   }
@@ -94,7 +94,7 @@ class HomeScreen extends Component {
                   selectedValue={this.state.end}
                   style={{
                     height: 60,
-                    width: 410
+                    width: 300
                   }}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ end: itemValue })
