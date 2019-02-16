@@ -9,6 +9,7 @@ import {
   Image
 } from "react-native";
 import DriverDashboardStackNavigator from "./DriverDashboardStackNavigator";
+import QRCodeDisplayScreen from "../screens/QRCodeDisplay";
 import { connect } from "react-redux";
 
 class customDrawerComponent extends Component {
@@ -56,7 +57,8 @@ const mapStateToProps = state => {
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    Home: DriverDashboardStackNavigator
+    Home: DriverDashboardStackNavigator,
+    QRCodeDisplay: QRCodeDisplayScreen
   },
   {
     contentComponent: connect(mapStateToProps)(customDrawerComponent),

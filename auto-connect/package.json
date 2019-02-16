@@ -20,6 +20,7 @@
     "react-native-app-intro-slider": "^1.0.1",
     "react-native-autocomplete-input": "^3.6.0",
     "react-native-elements": "^1.0.0",
+    "react-native-qrcode": "^0.2.7",
     "react-native-simple-toast": "^0.0.8",
     "react-navigation": "^3.0.9",
     "react-redux": "^6.0.0",
