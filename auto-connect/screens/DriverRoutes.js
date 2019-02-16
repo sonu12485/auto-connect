@@ -1,7 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Modal, AsyncStorage, Picker, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  AsyncStorage,
+  Picker,
+  Platform,
+  Dimensions
+} from "react-native";
 
-import { Input, Button } from 'react-native-elements';
+import { Input, Button } from "react-native-elements";
 
 import { Constants, Location, Permissions } from "expo";
 import Icon from "@expo/vector-icons/Ionicons";
@@ -12,14 +21,12 @@ import { fetchRoute } from "../actions/route";
 import axios from "axios";
 const URL = process.env["BACKEND_URI"];
 
-import { connect } from "react-redux"; 
+import { connect } from "react-redux";
 
 import Map from "../components/Map";
 
 class DriverRoutes extends Component {
-
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -31,12 +38,11 @@ class DriverRoutes extends Component {
       locationErrorMessage: null,
       start: 11,
       end: 1
-    }
+    };
   }
 
-  componentDidMount()
-  {
-    this.props.fetchUserDetails(); 
+  componentDidMount() {
+    this.props.fetchUserDetails();
     this.props.fetchPlaces();
 
     if (Platform.OS === "android" && !Constants.isDevice) {
@@ -49,15 +55,12 @@ class DriverRoutes extends Component {
     }
   }
 
-  componentDidUpdate()
-  {
-    if(this.props.user.autoNumber === "None" 
-    && 
-    this.state.autoNumberModal === false
-    &&
-    this.state.updateCount === 0
-    )
-    {
+  componentDidUpdate() {
+    if (
+      this.props.user.autoNumber === "None" &&
+      this.state.autoNumberModal === false &&
+      this.state.updateCount === 0
+    ) {
       this.setState({
         autoNumberModal: true,
         updateCount: 1
@@ -82,46 +85,42 @@ class DriverRoutes extends Component {
 
   addAutoNumber = async () => {
     // alert(this.state.autoNumber);
-    try
-      {
-        this.setState({
-            loading: true
-        });
+    try {
+      this.setState({
+        loading: true
+      });
 
-        const token = await AsyncStorage.getItem("token");
+      const token = await AsyncStorage.getItem("token");
 
-        await axios({
-            url: `${URL}autoNumber`,
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            data: {
-              autoNumber: this.state.autoNumber,
-            }
-        });
-
-        this.setState({
-          autoNumberModal: false,
-          autoNumber: "",
-          loading: false
-        });
-
-        this.props.fetchUserDetails();
-
-      }
-      catch(err)
-      {
-          console.log("error", err);
-      }
+      await axios({
+        url: `${URL}autoNumber`,
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        data: {
+          autoNumber: this.state.autoNumber
+        }
+      });
 
       this.setState({
         autoNumberModal: false,
         autoNumber: "",
         loading: false
       });
-  }
+
+      this.props.fetchUserDetails();
+    } catch (err) {
+      console.log("error", err);
+    }
+
+    this.setState({
+      autoNumberModal: false,
+      autoNumber: "",
+      loading: false
+    });
+  };
 
   renderPlaces = () => {
     if (this.props.places !== null) {
@@ -134,22 +133,20 @@ class DriverRoutes extends Component {
   };
 
   calculateFare = () => {
-
-    if(this.props.route.route !== null)
-    {
+    if (this.props.route.route !== null) {
       const placesNumber = this.props.route.route.length;
-      const lowerCost = placesNumber*15 - 10;
-      const higherCost = placesNumber*15 + 10;
+      const lowerCost = placesNumber * 15 - 10;
+      const higherCost = placesNumber * 15 + 10;
 
       return (
-        <Text>Estimated Total Fare - &#8377; {lowerCost} - {higherCost}</Text>
+        <Text>
+          Estimated Total Fare - &#8377; {lowerCost} - {higherCost}
+        </Text>
       );
-    }
-    else
-    {
+    } else {
       return null;
     }
-  }
+  };
 
   render() {
     return (
@@ -159,20 +156,26 @@ class DriverRoutes extends Component {
           transparent={false}
           visible={this.state.autoNumberModal}
         >
-          <View style={styles.container}> 
-              <Text>Enter your auto Number</Text>
-              <Input
-                placeholder='Enter your auto number'
-                onChangeText={(text)=> this.setState({ autoNumber: text })}
-                value={this.state.autoNumber}
-              />
-              <View style={{padding: 20}} >
+          <View style={styles.container}>
+            <Text
+              style={{ fontSize: 45, fontWeight: "bold", paddingBottom: 40 }}
+            >
+              Enter your auto number
+            </Text>
+            <Input
+              placeholder="XX-XX-XX-XXXX"
+              onChangeText={text => this.setState({ autoNumber: text })}
+              value={this.state.autoNumber}
+              inputStyle={{ width: 50, height: 30, fontSize: 25 }}
+            />
+            <View style={{ padding: 20 }}>
               <Button
                 title="Submit"
                 onPress={this.addAutoNumber}
                 loading={this.state.loading}
+                buttonStyle={{ width: "100%", height: 45 }}
               />
-              </View>
+            </View>
           </View>
         </Modal>
 
@@ -242,10 +245,7 @@ class DriverRoutes extends Component {
             }
           />
         </View>
-        <View style={{ padding: 10 }} >
-            {this.calculateFare()}
-        </View>
-
+        <View style={{ padding: 10 }}>{this.calculateFare()}</View>
       </View>
     );
   }
@@ -256,20 +256,24 @@ const mapStateToProps = state => {
     user: state.user,
     places: state.places,
     route: state.route
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {
-  fetchUserDetails,
-  fetchPlaces,
-  fetchRoute
-})(DriverRoutes);
+export default connect(
+  mapStateToProps,
+  {
+    fetchUserDetails,
+    fetchPlaces,
+    fetchRoute
+  }
+)(DriverRoutes);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    marginTop: Dimensions.get("window").height / 5
   },
   mapContainer: {
     height: 430,
@@ -279,6 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    width: "100%"
   }
 });

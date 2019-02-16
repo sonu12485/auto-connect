@@ -19,7 +19,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
       screen: LiveAutos,
       navigationOptions: {
         tabBarLabel: "Live Autos",
-        tabBarIcon: () => <Icon name="md-timer" size={20} />
+        tabBarIcon: () => <Icon name="md-stopwatch" size={20} />
       }
     },
     Pickup: {
