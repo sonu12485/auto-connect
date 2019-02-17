@@ -41,7 +41,7 @@ class TransactionsScreen extends Component {
                   }
             }
             title={transaction.from || transaction.to}
-            rightTitle={`₹ ${this.props.user.transactions[0].amount}`}
+            rightTitle={`₹ ${transaction.amount}`}
             rightTitleStyle={{
               color: "orange",
               fontWeight: "bold",
