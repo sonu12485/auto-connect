@@ -37,7 +37,7 @@ class Pay extends Component {
     }
     return (
       <View style={styles.container}>
-        <View style={{ paddingBottom: 100 }} >
+        <View style={{ paddingBottom: 200 }}>
           <Text
             style={{
               fontWeight: "bold",
@@ -48,7 +48,7 @@ class Pay extends Component {
             Scan the QR Code
           </Text>
         </View>
-        <View style={{ width: 300, height: 300 }} >
+        <View style={{ width: 300, height: 300 }}>
           <BarCodeScanner
             onBarCodeScanned={this.handleBarCodeScanned}
             style={{
