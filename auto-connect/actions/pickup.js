@@ -4,7 +4,7 @@ const URL = process.env["BACKEND_URI"];
 
 import Polyline from "@mapbox/polyline";
 
-const API_KEY = "AIzaSyCvEFK1EMeKuwvshOn8NAS214I2WzrEPgc";
+const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 export const fetchPickupRoute = (from, to) => {
 
